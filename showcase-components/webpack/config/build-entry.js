@@ -18,61 +18,40 @@ module.exports = function buildEntries(pagesEntry) {
 
   // 组件
   const components = glob.sync(path.resolve(`${pagesEntry}/*/App.vue`));
+
   if (components.length > 0) {
-    const output = `${TEMP_FOLDER}/showcase.js`;
-    fs.writeFileSync(output, template(components), 'utf-8');
-    entrys.showcase = output;
+    components.forEach(function(compPath) {
+      const name = /showcase-components\/src\/([a-zA-Z0-9-]+)\/App.vue/.exec(compPath)[1];
+      const output = `${TEMP_FOLDER}/${name}.js`;
+      fs.writeFileSync(output, template(name, compPath), 'utf-8');
+      entrys[name] = output;
+    });
   }
 
-  console.log('entrys', entrys);
+  // console.log('entrys', entrys);
   return entrys;
 };
-
-/**
- * 获取文件名称
- *
- * @param {string} dir
- * @returns
- */
-function transformFileNameToCompoentName(dir) {
-  const dirPathArr = dir.split('/');
-  const fileName = dirPathArr.pop();
-  const compName = dirPathArr.pop();
-  const name = fileName.split('.').pop() === 'vue' ? compName : fileName.replace(/\.(vue|js)$/, '');
-  return name.replace(/[^\w]+(\w)/g, (input, arg1) => arg1.toUpperCase());
-}
-
-/**
- * 将某个文件对象转化为对应的 import 语句
- *
- * @param {EntryItem[]} items
- * @returns
- */
-function transformToImport(items) {
-  console.log('items', items)
-  return items.map((item) => {
-    const filePath = item.toString();
-    const importPath = path.relative(TEMP_FOLDER, filePath).split(path.sep).join('/');
-    console.log('transformToImport', path.relative(TEMP_FOLDER, filePath))
-    return `import ${transformFileNameToCompoentName(filePath)} from '${importPath}';`;
-  });
-}
 
 /**
  * 创建一个页面模板入口文件
  *
  * @param {string} pageName
- * @param {EntryItem[]} globalComponents
- * @param {EntryItem[]} commonComponents
  * @param {EntryItem[]} components
  * @returns
  */
-function template(components) {
-  const imports = [...transformToImport(components)];
+function template(name, compPath) {
+  const compName = name.replace(/[^\w]+(\w)/g, (input, arg1) => arg1.toUpperCase());
+  return `
+    import ${compName} from '${compPath}';
+    const root = typeof window === 'undefined' ? global : window;
+    if (!root.${GLOBAL_OBJECT}) {
+      root.${GLOBAL_OBJECT} = {
+        components: {}
+      };
+    } else if (!root.${GLOBAL_OBJECT}.components) {
+      root.${GLOBAL_OBJECT}.components = {}
+    }
 
-  return `${imports.join('\n')}
-  const root = typeof window === 'undefined' ? global : window;
-  root.${GLOBAL_OBJECT} = {
-    components: { ${components.map(transformFileNameToCompoentName).join(',')} },
-  };`;
+    root.${GLOBAL_OBJECT}.components['${name}'] = ${compName};
+  `;
 }

@@ -8,7 +8,7 @@ function addEntry() {
   const newEntries = {};
 
   files.forEach(function(f) {
-    const name = /editors\/([\s\S]+)\/index.js/.exec(f)[1];
+    const name = /editors\/([a-zA-Z0-9-]+)\/index.js/.exec(f)[1];
     newEntries[name] = path.resolve(__dirname, `../../${f}`);
   });
   return newEntries;

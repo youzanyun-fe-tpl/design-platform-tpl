@@ -1,21 +1,3 @@
 
 {
-  "common-goods-layout": {
-    "js": "dist/common-goods-layout.js"
-  },
-  "coupon": {
-    "js": "dist/coupon.js"
-  },
-  "demo-editor": {
-    "js": "dist/demo-editor.js"
-  },
-  "goods-weapp": {
-    "js": "dist/goods-weapp.js"
-  },
-  "notice": {
-    "js": "dist/notice.js"
-  },
-  "title-text": {
-    "js": "dist/title-text.js"
-  }
 }

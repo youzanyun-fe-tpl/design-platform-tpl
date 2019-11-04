@@ -9,7 +9,7 @@
   ├── common                公共组件
   ├── editors               开发者开发的组件编辑器代码，**开发者在这里开发**
   ├── utils                 相关的工具方法
-├── build                   webpack打包配置
+├── webpack                 webpack打包配置
 ├── node_modules            node_modules
 └── dist                    本地打包文件
 ```

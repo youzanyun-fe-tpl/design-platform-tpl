@@ -70,8 +70,21 @@ const baseConfig = {
     ]
   },
   plugins: [
-    new VueLoader.VueLoaderPlugin()
-  ]
+    new VueLoader.VueLoaderPlugin(),
+  ],
+  optimization: {
+    splitChunks: {
+      minSize: 1,
+      maxAsyncRequests: 1,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor',
+          enforce: true
+        }
+      }
+    }
+  }
 };
 
 module.exports = baseConfig;
