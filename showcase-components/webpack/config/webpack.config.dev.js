@@ -3,7 +3,7 @@ const merge = require('webpack-merge');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const baseConfig = require('./webpack.config.base');
-const entry = require('./build-entry-dev');
+const entry = require('./build-entry');
 
 module.exports = merge(baseConfig, {
   mode: 'development',

@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const entry = require('./build-entry-build');
+const entry = require('./build-entry');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const baseConfig = require('./webpack.config.base');
 
