@@ -1,10 +1,12 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 const express = require('express');
+const fs = require('fs-extra');
 const path = require('path');
 const rimraf = require('rimraf');
 const webpack = require('webpack');
 const buildWebpackConfig = require('./config/webpack.config.build');
+const { TEMP_FOLDER } = require('./config/constants');
 
 const app = express();
 
@@ -41,5 +43,4 @@ webpack(buildWebpackConfig, async (err, stats) => {
   );
 
   fs.removeSync(TEMP_FOLDER);
-  resovle(wpkConfig);
 });
