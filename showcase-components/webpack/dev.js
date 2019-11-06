@@ -36,7 +36,7 @@ async function start() {
     devWebpackConfig.entry = buildEntries('src');
 
     // 打包代码
-    webpack(devWebpackConfig).watch(
+    watching = webpack(devWebpackConfig).watch(
       {
         ignored: /node_modules/,
         aggregateTimeout: 500,
