@@ -8,7 +8,7 @@ const excludes = [
   // 'style',
   // 'mixins',
   // 'utils',
-  // '.DS_Store'
+  '.DS_Store'
 ];
 
 module.exports = function() {
