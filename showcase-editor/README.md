@@ -16,22 +16,21 @@
 
 ## 如何开发一个编辑器
 
-编辑器主要是为店铺装修中C端（小程序组件和H5组件）提供编辑数据。
+编辑器主要是为店铺装修中C端（H5组件）提供编辑数据。
 
-脚手架中有一些初始的编辑器示例，可以提供参考。在demo示例中，显示了所有的编辑器基础UI的使用方式，在开发编辑器的时候，需要用基础UI，保持风格的统一。
+脚手架中有一些初始的编辑器示例，可以提供参考。
 
 Editor 需要继承 `src/common/editor-base`，子类需要重写一些方法和属性：
 
 - render 实例方法
 - info 静态属性，这是组件的基本信息，必须要有的字段有：
-  - type: 组件类型，PC端会根据这个type来渲染对应的editor
+  - type: 组件类型，PC端会根据这个type来渲染对应的editor，自动生成，请勿修改
   - name: 组件名字
   - icon: 组件图标
   - maxNum: 组件可以使用的最大个数
   - extensionImage: 给预览占位的图片
 - getInitialValue 静态方法，创建一个新组件实例时的默认值。【注意】必须要有type值，并且要和info属性里的type一致！
 - validate 静态方法，对表单做校验，返回一个 Promise，将所有错误的一个 `map` resolve 出来，没有错我就返回一个空对象。
-- 关于type的取值，可以参考示例编辑器，一般可以写`extension-xxx`, xxx代表具体编辑器的名字。用`extension`来表示三方组件。
 
 `src/common/editor-base`基类提供了一些基本方法：
 - `onInputChange` 封装了处理标准 Input 组件 onChange 事件的回调，使用时需要确保 onChange 抛出来的 `Event` 对象上有 `targte.name`, `target.value` 以及 `preventDefault` 和 `stopPropagation`。
@@ -48,20 +47,14 @@ Editor 有如下几个重要 props：
 
 除了暴露出来的`editor-common`中的基础编辑器UI，我们还暴露了三个基本的编辑选择器`editorSelectors`：
 
-- CouponSelector
-- chooseGoods
-- chooseGoodsTag
-
-具体用法可以参考`goods-weapp`里面的商品组件编辑器的用法和`coupon`中的优惠券编辑器。
-
-## 额外的api
-
-- zan-pc-ajax 建议ajax请求使用zan-pc-ajax库来请求，具体使用可以参考`src/editors/coupon/api.js`
+- CouponSelector    -- 优惠券选择器
+- GoodsSelector     -- 商品选择器
+- GoodsTagSelector  -- 商品分组选择器
 
 ## 本地开发
 
 - npm run dev 开启本地编辑器开发
-- npm run build 会打包对应的编辑器
+- npm run build 打包编辑器组件
 
 ## 原则
 
