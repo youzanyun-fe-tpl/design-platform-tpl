@@ -35,3 +35,7 @@ class GoodsEditor extends DesignEditor {
 ### 说明
 
 在调用商品选择器的时候，上述的props都可以默认传入，按照demo例子的调用方式即可
+
+### 备注
+
+在使用商品选择器的时候，获取的数据都是存在`goods`字段里的，这是固定写死的，不需要开发者额外去定义。

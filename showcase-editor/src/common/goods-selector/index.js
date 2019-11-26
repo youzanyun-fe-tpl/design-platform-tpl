@@ -9,7 +9,7 @@ export default class GoodsSelector extends Component {
   // 添加商品
   addGoodImage = () => {
     const { globalConfig, onCustomInputChange } = this.props;
-    const { goods } = this.props.value;
+    const { goods = [] } = this.props.value;
     const self = this;
     let addGoodsList;
 

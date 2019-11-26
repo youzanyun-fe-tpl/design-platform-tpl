@@ -3,11 +3,15 @@ import { Icon, Notify } from 'zent';
 import { ControlGroup, EditorCard } from 'editor-common';
 import { CouponSelector } from 'editorSelectors';
 import { MAX_COUPON_NUM } from './constants';
+import { transferCouponList, validCoupon } from './helper';
 import api from './api';
 
-export default class GoodsSelector extends Component {
+import './style.scss';
+
+export default class CouponSelectorWrapper extends Component {
   handleCouponChange = list => {
-    this.onCustomInputChange('coupon')(list);
+    const { onCustomInputChange } = this.props;
+    onCustomInputChange('coupon')(list);
   };
 
   handleAddCoupon = () => {
@@ -19,6 +23,14 @@ export default class GoodsSelector extends Component {
       btnLink: window._global.isSuperStore ? '/ump/coupon' : '/v2/ump/tradeincard',
       onChange: this.handleCouponSelectorChange,
     });
+  };
+
+  handleCouponSelectorChange = list => {
+    const { onCustomInputChange } = this.props;
+    const { coupon = [] } = this.props.value;
+    const addCouponList = validCoupon(coupon, transferCouponList(list), MAX_COUPON_NUM);
+
+    onCustomInputChange('coupon')(addCouponList);
   };
 
   fetch = ({ keyword, pageNo, pageSize }) => {
@@ -39,7 +51,7 @@ export default class GoodsSelector extends Component {
 
   render() {
     const { value, showError, validation } = this.props;
-    const { coupon } = value;
+    const { coupon = [] } = value;
 
     return (
       <>
@@ -49,6 +61,7 @@ export default class GoodsSelector extends Component {
           showError={showError}
           error={validation.coupon}
           bgColored
+          className="coupon-selector"
         >
           <EditorCard
             list={coupon}

@@ -3,7 +3,8 @@ const { styleLoaders } = require('./generate-loaders');
 const constants = require('./constants');
 const { DIST_FOLDER } = constants;
 
-const isPord = process.env.NODE_ENV === 'production';
+// const isPord = process.env.NODE_ENV === 'production';
+const isPord = true;
 const baseConfig = {
   output: {
     path: DIST_FOLDER,
