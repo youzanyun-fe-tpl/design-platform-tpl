@@ -14,49 +14,71 @@
 └── dist                    本地打包文件
 ```
 
-## 如何开发一个编辑器
+## 本地开发
 
-编辑器主要是为店铺装修中C端（H5组件）提供编辑数据。
+- npm install 安装依赖
+- npm run dev 开启本地编辑器开发
+- npm run build 打包编辑器组件代码
 
-脚手架中有一些初始的编辑器示例，可以提供参考。
+## 如何开发一个编辑器组件
 
-Editor 需要继承 `src/common/editor-base`，子类需要重写一些方法和属性：
+**Editor 需要继承 `src/common/editor-base`，子类需要重写一些方法和属性：**
 
 - render 实例方法
 - info 静态属性，这是组件的基本信息，必须要有的字段有：
-  - type: 组件类型，PC端会根据这个type来渲染对应的editor，自动生成，请勿修改
+  - type: 组件类型，PC端会根据这个type来渲染对应的editor
   - name: 组件名字
   - icon: 组件图标
   - maxNum: 组件可以使用的最大个数
-  - extensionImage: 给预览占位的图片
-- getInitialValue 静态方法，创建一个新组件实例时的默认值。【注意】必须要有type值，并且要和info属性里的type一致！
-- validate 静态方法，对表单做校验，返回一个 Promise，将所有错误的一个 `map` resolve 出来，没有错我就返回一个空对象。
+- getInitialValue 静态方法，创建一个新组件实例时的默认值。
+  - 【注意】必须要有type值，并且要和info属性里的type一致！
+- validate 静态方法，对表单做校验，返回一个 Promise，将所有错误的一个 `map` resolve 出来，没有错就返回一个空对象。
+- type的值在创建组件时已生成，请勿改动，与文件名保持一致
 
-`src/common/editor-base`基类提供了一些基本方法：
-- `onInputChange` 封装了处理标准 Input 组件 onChange 事件的回调，使用时需要确保 onChange 抛出来的 `Event` 对象上有 `targte.name`, `target.value` 以及 `preventDefault` 和 `stopPropagation`。
-- `onCustomInputChange` 提供了更加基础的 onChange 事件处理功能，适用于那些非标准 Input 组件。
-- `onInputBlur` 和 `onCustomInputBlur` 提供了处理 blur 事件的功能。
+**`src/common/editor-base`基类提供了一些基本方法：**
+1.  `onInputChange`
+  - 封装了处理标准 Input 组件 onChange 事件的回调；
+  - 使用时需要确保 onChange 抛出来的 `Event` 对象上有 `targte.name`, `target.value` 以及 `preventDefault` 和 `stopPropagation`。
+  - 使用示例
+  ``` jsx
+  <Input
+    name="content"
+    value={value.content}
+    onChange={this.onInputChange}
+    onBlur={this.onInputBlur}
+  />
+  ```
+2.  `onCustomInputChange`
+  - 提供了更加基础的 onChange 事件处理功能，适用于那些非标准 Input 组件。
+  - 使用示例
+  ``` jsx
+  /**
+   * name: '字段名'
+   */
+  this.onCustomInputChange(name)(value)
+  ```
+  - 注：在有赞提供的`商品选择器(GoodsSelector)` 和 `优惠券选择器(CouponSelector)` 中 ，使用方法不同，具体先后面示例
 
-Editor 有如下几个重要 props：
+3. `onInputBlur` 和 `onCustomInputBlur` 提供了处理 blur 事件的功能。
+
+**Editor 有如下几个重要 props：**
 - value，实例当前的值
 - validation，当前的错误信息，是个对象，key 对应表单里的 Input name。
 - showError，是否强制显示所有错误，如果为 `true`，Editor 必须把当前所有错误显示出来。这个一般是传给editor-common里面的ControlGroup组件。具体用法可以参考demo示例
 - onChange，用于回写 value，一般用不到，已经封装好了，建议使用 `onInputChange`/`onCustomInputChange`。
 
-## 编辑选择器
+#### 编辑选择器
 
-除了暴露出来的`editor-common`中的基础编辑器UI，我们还暴露了三个基本的编辑选择器`editorSelectors`：
+除了暴露出来的`editor-common`中的基础编辑器UI，我们还暴露了两个基本的编辑选择器`editorSelectors`：
 
-- CouponSelector    -- 优惠券选择器
-- GoodsSelector     -- 商品选择器
-- GoodsTagSelector  -- 商品分组选择器
+- CouponSelector -- 优惠券选择器
+    - 选择结果会自动加入到`value.coupon`中，可在c端使用
+- GoodsSelector -- 商品选择器
+    - 选择结果会自动加入到`value.goods`中，可在c端使用
 
-## 本地开发
+**组件中使用选择器后，需保证收集数据的`name`值不能重复**
 
-- npm run dev 开启本地编辑器开发
-- npm run build 打包编辑器组件
-
-## 原则
+#### 原则
 
 **开发原则和要点，开发者要特别关注！！**
 
