@@ -86,7 +86,6 @@ async function start() {
         if (err || stats.hasErrors()) {
           // 错误处理
         }
-        isBuilding = false;
       }
     );
   };

@@ -9,8 +9,8 @@ module.exports = merge(baseConfig, {
   entry: entry('src'),
   output: {
     filename: '[name].js',
-    publicPath: 'https://file.yzcdn.cn/mall-cloud/',
-    chunkFilename: '[id].js'
+    // publicPath: 'https://file.yzcdn.cn/mall-cloud/',
+    // chunkFilename: '[id].js'
   },
   performance: {
     hints: false
