@@ -1,13 +1,10 @@
 {
-  "name": "demo",
-  "private": true,
+  "name": "showcase-components",
   "version": "1.0.0",
   "scripts": {
     "dev": "node ./webpack/dev.js",
     "build": "node ./webpack/build.js"
   },
-  "author": "youzanyun",
-  "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-export-default-from": "^7.2.0",

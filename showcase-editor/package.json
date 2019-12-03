@@ -1,8 +1,7 @@
 {
-  "name": "wsc-decorate-extension",
+  "name": "showcase-editor",
   "version": "0.0.1",
   "description": "装修编辑器插件开发工具",
-  "main": "dist/design.js",
   "scripts": {
     "build:editorsJson": "node ./webpack/generate-editors-json.js",
     "dev": "npm run build:editorsJson && node ./webpack/webpack-editor-dev.js",
@@ -62,6 +61,5 @@
   "repository": {
     "type": "git",
     "url": ""
-  },
-  "author": "youzan"
+  }
 }
