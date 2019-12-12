@@ -28,7 +28,7 @@ export default class CouponSelectorWrapper extends Component {
   handleCouponSelectorChange = list => {
     const { onCustomInputChange } = this.props;
     const { coupon = [] } = this.props.value;
-    const addCouponList = validCoupon(coupon, transferCouponList(list), MAX_COUPON_NUM);
+    const addCouponList = validCoupon(coupon, list, MAX_COUPON_NUM);
 
     onCustomInputChange('coupon')(addCouponList);
   };

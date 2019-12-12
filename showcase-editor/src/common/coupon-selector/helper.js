@@ -42,6 +42,7 @@ export function transferCouponList(list) {
         discount = 0,
         preferential_type: preferentialType = 1,
         preferentialDesc = '',
+        fetchUrl = '',
       } = item;
       const atLeast = (condition / 100).toFixed(2) || 0;
       const originAtLeast = Math.round(Number(atLeast) * 100) || 0;
@@ -56,6 +57,7 @@ export function transferCouponList(list) {
         at_least: atLeast,
         origin_at_least: originAtLeast,
         condition: preferentialDesc,
+        fetchUrl,
       });
     });
   }
