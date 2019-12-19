@@ -81,7 +81,7 @@ export default class CouponSelectorWrapper extends Component {
               return (
                 <div key={index} className="decorate-editor_subentry-item clearfix">
                   <i className="decorate-coupon-editor__drag" />
-                  {`优惠券: ${item.name}${item.condition ? ` (${item.condition})` : ''}`}
+                  {`优惠券: ${item.title}${item.preferentialDesc ? ` (${item.preferentialDesc})` : ''}`}
                 </div>
               );
             })}
