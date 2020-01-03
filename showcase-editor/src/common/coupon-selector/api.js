@@ -12,4 +12,23 @@ export default {
       data,
     });
   },
+
+  getH5CouponData(ids) {
+    const params = {
+      ids,
+      pageNo: 1,
+      pageSize: 10,
+      type: 1,
+      status: 2,
+      source: 'wap_fetch',
+      isDisableUnderstock: true,
+      isDisableUnshare: true,
+    };
+
+    return ajax({
+      url: `${BASE_URL}/shop/design/coupon/list.json`,
+      type: 'GET',
+      data: params,
+    });
+  },
 };

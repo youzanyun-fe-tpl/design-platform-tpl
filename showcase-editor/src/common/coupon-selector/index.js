@@ -3,7 +3,7 @@ import { Icon, Notify } from 'zent';
 import { ControlGroup, EditorCard } from 'editor-common';
 import { CouponSelector } from 'editorSelectors';
 import { MAX_COUPON_NUM } from './constants';
-import { transferCouponList, validCoupon } from './helper';
+import { validCoupon } from './helper';
 import api from './api';
 
 import './style.scss';
@@ -27,10 +27,13 @@ export default class CouponSelectorWrapper extends Component {
 
   handleCouponSelectorChange = list => {
     const { onCustomInputChange } = this.props;
-    const { coupon = [] } = this.props.value;
-    const addCouponList = validCoupon(coupon, list, MAX_COUPON_NUM);
+    const ids = list.map(couponItem => couponItem.id).join(',');
+    api.getH5CouponData(ids).then((coupons = []) => {
+      const { coupon = [] } = this.props.value;
+      const addCouponList = validCoupon(coupon, coupons, MAX_COUPON_NUM);
 
-    onCustomInputChange('coupon')(addCouponList);
+      onCustomInputChange('coupon')(addCouponList);
+    });
   };
 
   fetch = ({ keyword, pageNo, pageSize }) => {
@@ -81,7 +84,7 @@ export default class CouponSelectorWrapper extends Component {
               return (
                 <div key={index} className="decorate-editor_subentry-item clearfix">
                   <i className="decorate-coupon-editor__drag" />
-                  {`优惠券: ${item.title}${item.preferentialDesc ? ` (${item.preferentialDesc})` : ''}`}
+                  {`优惠券: ${item.title}`}
                 </div>
               );
             })}
